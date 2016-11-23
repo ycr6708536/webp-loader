@@ -4,7 +4,7 @@
 // The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var Imagemin = require('imagemin');
+var imagemin = require('imagemin');
 var imageminWebp = require('imagemin-webp');
 var loaderUtils = require('loader-utils');
 
@@ -38,22 +38,11 @@ module.exports = function(content) {
   if (this.debug === true && options.bypassOnDebug === true) {
     return callback(null, content);
   } else {
-    var imagemin = new Imagemin()
-      .src(content)
-      .use(imageminWebp(options));
-
-    imagemin.run(function(err, files) {
-      if (called) {
-        return;
-      }
-
-      called = true;
-
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, files[0].contents);
-      }
+    imagemin.buffer(content, [imageminWebp(options)]
+    ).then(file => {
+      callback(null, file);
+    }).catch(err => {
+      callback(err);
     });
   }
 };

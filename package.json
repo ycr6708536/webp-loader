@@ -23,9 +23,9 @@
   },
   "homepage": "https://github.com/kavu/webp-loader#readme",
   "dependencies": {
-    "imagemin": "^4.0.0",
-    "imagemin-webp": "^3.1.0",
-    "loader-utils": "^0.2.15"
+    "loader-utils": "^0.2.16",
+    "imagemin": "^5.2.2",
+    "imagemin-webp": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^3.3.0",
