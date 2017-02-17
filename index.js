@@ -38,8 +38,7 @@ module.exports = function(content) {
   if (this.debug === true && options.bypassOnDebug === true) {
     return callback(null, content);
   } else {
-    imagemin.buffer(content, [imageminWebp(options)]
-    ).then(file => {
+    imagemin.buffer(content, { plugins: [imageminWebp(options)] }).then(file => {
       callback(null, file);
     }).catch(err => {
       callback(err);
